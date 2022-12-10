@@ -56,7 +56,7 @@ mean_base_salary_plot =
   group_by(county_name) %>%
   summarize(
       mean_base_salary = mean(base_salary, na.rm = TRUE)) %>%
-        plot_ly(x = ~ reorder(county_name, mean_base_salary), y = ~ mean_base_salary, color = ~county_name,  type = "box", colors = "viridis")  
+        plot_ly(x = ~ reorder(county_name, mean_base_salary), y = ~ mean_base_salary, color = ~county_name,  type = "bar", colors = "viridis")  
 
 
 mean_base_salary_plot |> layout(yaxis = list(title = "Mean Base Salary"),title = "The Average Base Salary for Municipal Employees of New York State By County",

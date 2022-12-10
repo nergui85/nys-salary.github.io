@@ -22,7 +22,7 @@ navbar:
     - icon: fa fa-play-circle-o
       href: mailto:<you@youremail.com>
     - icon: fa-github fa-lg
-      href: https://github.com/nergui85/nys_salary_project.github.io
+      href: https://nergui85.github.io/nys-salary.github.io/
 
 output:
   html_document:
