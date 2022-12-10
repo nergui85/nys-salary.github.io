@@ -114,3 +114,159 @@ number_job_titles_plot =
 
 number_job_titles_plot
 ```
+
+# Plot for Top 10 Job Titles Throughout the New York State Counties
+
+```{r}
+job_frequency =
+payroll_data %>%
+    group_by(county_name, job_title) %>%
+    summarise(job_frequency = n()) %>%
+    arrange(desc(job_frequency)) %>%
+    ungroup()
+
+job_frequency_data = 
+    job_frequency %>%
+    top_n(job_frequency, n = 10) %>%
+    mutate(
+     job_title = recode(job_title, "TEACHER- PER SESSION" = "TEACHER PER SESSION"),
+     job_title = recode(job_title, "ANNUAL ED PARA" = "EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "TEACHER-GENERAL ED" = "GENERAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "SUBSTITUTE ED PARA" = "SUBSTITUTE EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "F/T SCHOOL AIDE" = "SCHOOL AIDE"))
+    
+job_frequency_plot =
+    job_frequency_data %>%
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 120000),
+    breaks = seq(0, 120000, by = 10000)) +
+  labs(
+    x = "Top 10 Job Titles",
+    y = "Frequency of Job Titles",
+    title = "The Top 10 Job Titles Held By Municipal Employees Throughout the Counties in New York State",
+    fill = "New York State County Names"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+job_frequency_plot
+```
+
+# The Top Five Job Titles Held by Municipal Employees in Six New York State Counties Plot
+
+```{r}
+top5_freq = 
+  payroll_data %>%
+   filter(county_name %in% c("NEW YORK", "KINGS", "BRONX", "QUEENS", "RICHMOND","ALBANY")) %>%
+   group_by(county_name, job_title) %>%
+   summarise(number_of_people = n()) %>%
+   arrange(desc(number_of_people)) %>%
+   slice(1:5)
+
+top5_freq_n = 
+  top5_freq %>%
+   mutate(
+     job_title = as.factor(job_title),
+     job_title = recode(job_title, "TEACHER- PER SESSION" = "TEACHER PER SESSION"),
+     job_title = recode(job_title, "ANNUAL ED PARA" = "EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "ASST DIR OF INTERGVNMENTAL RELTNS FOR THE ALBANY OFFICE" = "ASSISTANT DIRECTOR OF INTERNATIONAL RELATIONS"),
+     job_title = recode(job_title, "EMERGENCY MEDICAL SPECIALIST-EMT" = "EMT"))
+ 
+top_plot = 
+  ggplot(top5_freq_n, aes(x = reorder(job_title, number_of_people), y = number_of_people)) + geom_point(aes(color = county_name), alpha = 0.5) + 
+scale_y_continuous(
+  labels = scales::comma,
+  limits = c(0,120000),
+  breaks = seq(0, 120000, by = 15000)) + 
+labs(title = "The Top Five Job Titles Held by Municipal Employees in Six New York State Counties",x = "Job Title", y = "Number of Municipal Employees")  + 
+  guides(color = guide_legend(title = "New York State County Names")) +
+theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+top_plot
+```
+
+# Plot for Top 10 Job Titles Throughout the New York County
+
+```{r}
+job_frequency_newyork =
+payroll_data %>%
+    filter(county_name == "NEW YORK") |> 
+    group_by(county_name, job_title) %>%
+    summarise(job_frequency = n()) %>%
+    arrange(desc(job_frequency)) %>%
+    ungroup()
+
+job_frequency_newyork_data = 
+    job_frequency_newyork %>%
+    top_n(job_frequency, n = 10) %>%
+    mutate(
+     job_title = recode(job_title, "TEACHER- PER SESSION" = "TEACHER PER SESSION"),
+     job_title = recode(job_title, "ANNUAL ED PARA" = "EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "TEACHER-GENERAL ED" = "GENERAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "SUBSTITUTE ED PARA" = "SUBSTITUTE EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "F/T SCHOOL AIDE" = "SCHOOL AIDE"))
+    
+job_frequency_newyork_plot =
+    job_frequency_newyork_data %>%
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 120000),
+    breaks = seq(0, 120000, by = 10000)) +
+  labs(
+    x = "Top 10 Job Titles",
+    y = "Frequency of Job Titles",
+    title = "The Top 10 Job Titles Held By Municipal Employees in New York County",
+    fill = "New York State County Names"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+job_frequency_newyork_plot
+```
+
+# Plot for Top 10 Job Titles Throughout Albany County
+
+```{r}
+job_frequency_albany =
+payroll_data %>%
+    filter(county_name == "ALBANY") |> 
+    group_by(county_name, job_title) %>%
+    summarise(job_frequency = n()) %>%
+    arrange(desc(job_frequency)) %>%
+    ungroup()
+
+job_frequency_albany_data = 
+    job_frequency_albany %>%
+    top_n(job_frequency, n = 10) %>%
+    mutate(
+     job_title = recode(job_title, "TEACHER- PER SESSION" = "TEACHER PER SESSION"),
+     job_title = recode(job_title, "ANNUAL ED PARA" = "EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "TEACHER SPECIAL EDUCATION" = "SPECIAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "TEACHER-GENERAL ED" = "GENERAL EDUCATION TEACHER"),
+     job_title = recode(job_title, "SUBSTITUTE ED PARA" = "SUBSTITUTE EDUCATION PARAPROFESSIONAL"),
+     job_title = recode(job_title, "F/T SCHOOL AIDE" = "SCHOOL AIDE"))
+    
+job_frequency_albany_plot =
+    job_frequency_albany_data %>%
+    ggplot(aes(x = reorder(job_title, job_frequency), y = job_frequency, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") + 
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 5),
+    breaks = seq(0, 5, by = 1)) +
+  labs(
+    x = "Top 10 Job Titles",
+    y = "Frequency of Job Titles",
+    title = "The Top 10 Job Titles Held By Municipal Employeesin Albany County",
+    fill = "New York State County Names"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+job_frequency_albany_plot
+```
