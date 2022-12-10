@@ -1,0 +1,116 @@
+---
+title: "Base Salary by Pay Base"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+```
+
+```{r}
+payroll_data = 
+    read_csv("data/payroll_data.csv")
+```
+
+```{r}
+number_job_titles_plot =
+  payroll_data %>%
+  group_by(county_name, job_title) %>%
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(county_name) %>%
+  summarise(count = n()) %>%
+        ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 1500),
+    breaks = seq(0, 1500, by = 250)) +
+  labs(
+    x = "County Names",
+    y = "Number of Job Titles",
+    title = "The Number of Job Titles Held By Municipal Employees of New York State By County",
+    fill = "New York State County Names"
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+number_job_titles_plot
+```
+
+
+```{r}
+Ls_bar = payroll_data %>%
+  group_by(leave_status) %>%
+  summarise(
+    count = n())
+
+ggplot(Ls_bar, aes(x = leave_status, y = count, fill = leave_status)) + geom_bar(position = "dodge", stat = "identity") + labs(title = "The Number of Employees by Municipality Separated  by Leave Status", x = "Leave Status", y = "Number of Employees") + scale_y_continuous(labels = scales::comma)
+```
+
+```{r}
+Total_ls = table(pull(payroll_data,leave_status))
+
+Total_ls
+
+
+labels = c("Active", "Ceased", "On Leave")
+
+piepercent = round(100 * Total_ls / sum(Total_ls), 1)
+
+par(xpd = TRUE) 
+pie(Total_ls, labels = paste(labels, sep = " ", piepercent, "%"),
+    main = "Percentages of Municipal Employees by Leave Status", col = viridis(length(Total_ls)))
+legend("topright", c("Active", "Ceased", "On Leave"),cex = 0.9, fill = viridis(length(Total_ls)))
+```
+
+# Total Number of Job Titles by New York State Counties Plot
+
+```{r}
+number_job_titles_plot =
+  payroll_data %>%
+  group_by(county_name, job_title) %>%
+  summarise(count = n()) %>%
+  ungroup() %>% 
+  group_by(county_name) %>%
+  summarise(count = n()) %>%
+  ggplot(aes(x = reorder(county_name, count), y = count, fill = county_name)) +
+  geom_bar(position = "dodge", stat = "identity") +
+  scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0, 1500),
+    breaks = seq(0, 1500, by = 250)) +
+  labs(
+    x = "County Names",
+    y = "Number of Job Titles",
+    title = "The Number of Job Titles Held By Municipal Employees of New York State By County",
+    fill = "New York State County Names"
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+number_job_titles_plot
+```

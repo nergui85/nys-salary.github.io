@@ -1,0 +1,188 @@
+---
+title: "Base Salary"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+
+
+
+
+<center>
+<img src="images/wall_street_workers.jpg" style="width:100%">
+</center>
+
+
+### Mean Base Salary By New York Counties
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+```
+
+```{r}
+payroll_data = 
+    read_csv("data/payroll_data.csv")
+```
+
+
+```{r}
+
+mean_base_salary_plot =
+  payroll_data %>%
+  group_by(county_name) %>%
+  summarize(
+      mean_base_salary = mean(base_salary, na.rm = TRUE)) %>%
+        plot_ly(x = ~ reorder(county_name, mean_base_salary), y = ~ mean_base_salary, color = ~county_name,  type = "box", colors = "viridis")  
+
+
+mean_base_salary_plot |> layout(yaxis = list(title = "Mean Base Salary"),title = "The Average Base Salary for Municipal Employees of New York State By County",
+                xaxis = list(title = "County Names"))
+
+```
+ 
+
+##### Base Salary {.tabset}
+###### Base Salary by Annually
+
+```{r}
+pay_basis_tibble = 
+    payroll_data %>%
+    filter(pay_basis == "Annually") |> 
+    group_by(county_name) %>% 
+    summarise(median_base_salary = median(base_salary))
+
+Median_base_salary_plot_annually =
+    payroll_data %>%
+    filter(pay_basis == "Annually") |> 
+    left_join(pay_basis_tibble, by = "county_name") %>%
+    ggplot(aes(x = reorder(county_name, median_base_salary), y = base_salary, 
+               fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(20000, 150000),
+    breaks = seq(20000, 150000, by = 10000)) +
+    labs(
+    x = "County Names",
+    y = " Base Salary",
+    title = "Annual Median Base Salary For Each County", 
+    fill = "New York State County Names"
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_annually
+```
+
+
+###### Base Salary by Daily
+
+```{r}
+pay_basis_daily_tibble = 
+    payroll_data %>%
+    filter(pay_basis == "Daily") |> 
+    group_by(county_name) |> 
+    summarise(median_base_salary_daily = median(base_salary))
+
+Median_base_salary_plot_daily =
+    payroll_data %>%
+    filter(pay_basis == "Daily") |> 
+    left_join(pay_basis_daily_tibble,  by = "county_name") %>%
+    ggplot(aes(x = reorder(county_name, median_base_salary_daily) , 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,625),
+    breaks = seq(0, 625, by = 50)) +
+    labs(
+    x = "County Names",
+    y = " Base Salary",
+    title = "Daily Median Base Salary For Each County", 
+    fill = "New York State County Names"
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_daily
+```
+
+###### Base Salary by Hourly 
+
+```{r}
+pay_basis_hourly_tibble= 
+    payroll_data %>%
+    filter(pay_basis == "Hourly") |> 
+    group_by(county_name) %>%
+    summarise(median_base_salary_hourly = median(base_salary))
+
+Median_base_salary_plot_hourly =
+    payroll_data %>%
+    filter(pay_basis == "Hourly") |> 
+    left_join(pay_basis_hourly_tibble,  by = "county_name") %>%
+    ggplot(aes(x = reorder(county_name, median_base_salary_hourly), 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,95),
+    breaks = seq(0,95, by = 10)) +
+    labs(
+    x = "County Names",
+    y = " Base Salary",
+    title = "Hourly Median Base Salary For Each County",
+     fill = "New York State County Names"
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_hourly
+```
+
+
+###### Base Salary by Prorated
+
+```{r}
+pay_basis_prorated_tibble = 
+    payroll_data %>%
+    filter(pay_basis == "Prorated Annual") |> 
+    group_by(county_name) %>%
+    summarise(median_base_salary_prorated = median(base_salary))  
+    
+Median_base_salary_plot_prorated =
+    payroll_data %>%
+    left_join(pay_basis_prorated_tibble,  by = "county_name") %>%   
+    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(5000,85000),
+    breaks = seq(5000, 85000, by = 10000)) +
+    labs(
+    x = "County Names",
+    y = " Base Salary",
+    title = "Prorated Annual Median Base Salary For Each County",
+    fill = "New York State County Names"
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+Median_base_salary_plot_prorated
+```
+

@@ -1,0 +1,89 @@
+---
+title: "Over Time and Other Pay"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+
+```{r}
+library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	fig.width = 8, 
+  fig.height = 6,
+  out.width = "90%"
+)
+options(
+  ggplot2.continuous.colour = "viridis",
+  ggplot2.continuous.fill = "viridis"
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+theme_set(theme_minimal() + theme(legend.position = "bottom"))
+
+```
+
+```{r}
+payroll_data = 
+    read_csv("data/payroll_data.csv")
+```
+
+```{r}
+median_tibble =
+  payroll_data %>%
+  group_by(county_name) %>%
+  summarise(median_total_other_pay = median(total_other_pay))
+median_other_pay_plot =
+  payroll_data %>%
+  left_join(median_tibble, by = "county_name") %>%
+        ggplot(aes(x = reorder(county_name, median_total_other_pay), y = total_other_pay, fill = county_name)) +
+  geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(-20000, 40000),
+    breaks = seq(-20000, 40000, by = 10000)) +
+  labs(
+    x = "County Names",
+    y = "Median Total Other Types of Pay",
+    title = "The Median Total Other Pay for Municipal Employees of New York State By County",
+    fill = "New York State County Names"
+  ) + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 0.5)) 
+
+median_other_pay_plot
+```
+
+```{r}
+overtime_tibble = payroll_data %>% 
+    group_by(county_name) %>% 
+    summarise(median_total_ot_paid = median(total_ot_paid))
+    
+median_ot_paid_plot = 
+    payroll_data |> 
+    left_join(overtime_tibble, by = "county_name") |> 
+    ggplot(aes(x = reorder(county_name, median_total_ot_paid ), y = total_ot_paid, fill = county_name)) +
+    geom_boxplot() +
+     scale_y_continuous(
+      labels = scales::comma,
+    limits = c(-5000, 32500),
+    breaks = seq(-5000, 32500, by = 5000)) +
+    labs(
+    x = "County Names",
+    y = "Total Overtime Paid",
+    title = "Total Overtime Paid By Each County",
+    fill = "New York State County Names"
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+
+median_ot_paid_plot
+```
+

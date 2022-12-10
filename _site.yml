@@ -1,0 +1,30 @@
+name: "Our Website"
+output_dir: "."
+navbar:
+  title: "Home"
+  right:
+    - text: "Explotory Analyses"
+      menu:
+      - text: "Base Salary"
+        href: base_salary.html
+      - text: "Job and Employee"
+        href: job_employees.html
+      - text: "Over Time and Other Pay"
+        href: ot_other_pay.html 
+    - text: "Statistical Analysis"
+      menu: 
+      - text: "Statistical Tests"
+        href: stat.html
+      - text: "Payroll association with county"
+        href: payroll_association.html     
+    - text: "Project Report"
+      href: project.html
+    - icon: fa fa-play-circle-o
+      href: mailto:<you@youremail.com>
+    - icon: fa-github fa-lg
+      href: https://github.com/nergui85/nys_salary_project.github.io
+
+output:
+  html_document:
+    theme: cosmo
+    

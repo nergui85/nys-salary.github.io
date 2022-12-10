@@ -1,0 +1,51 @@
+---
+title: "New York State and Average Total Pay By Borough in 2022"
+output: 
+  html_document:
+    code_folding: hide
+    toc: true
+    toc_float: true
+    theme: cosmo
+---
+
+
+
+<center>
+<img src="images/nys.jpg" style="width:100%">
+</center>
+
+
+
+
+## Motivation 
+New York City (NYC) is recognized as having the largest city and regional economies in the United States (Wikipedia, 2022).  If New York City were an individual country, it would be ranked as the 10th largest global economy (Wikipedia, 2022).  Our motivation for this project is to  use the skills that we have learned in Data Science I and apply them to answer imperative questions about NYC, such as which NYC borough yields the highest and lowest average total pay, which would combine salary, overtime, and other pay, in 2022 from data related to New York City’s budget on the salaries and overtime pay of municipal employees.
+
+## What You’ll Find In This Website
+* Anova Analyses of Average Total Pay By Borough
+* A full report detailing our process (see Project Report tab)
+* A screencast walking you through this website (see play button icon)
+* The github repository containing our raw code and analyses (see Github icon)
+* Economy of New York City
+
+<br>
+
+<small>
+
+Varvara Rousseau, Nergui Ravzanaadii and Justin Vargas
+</p>
+
+<p style="text-align: center;">
+Visualizations and analyses performed using [R](https://www.r-project.org/about.html) (v4.0.3) and [RStudio](https://posit.co/) (v1.3.1073).<br>
+
+<p style="text-align: center;">
+Additional interactivity added using [plotly](https://plotly.com/) (v4.13.0).<br>
+
+<p style="text-align: center;">
+[Click here](https://data.cityofnewyork.us/City-Government/Citywide-Payroll-Data-Fiscal-Year-/k397-673e) to see publicly available New York State and Average Total Pay dataset, a NYC Open data.
+
+<p style="text-align: center;">
+[Click here](https://en.wikipedia.org/wiki/Economy_of_New_York_City#:~:text=The%20economy%20of%20New%20York,the%20world's%20premier%20financial%20center.
+https://en.wikipedia.org/wiki/Economy_of_New_York_(state)
+) to see overall Economy of New York City.<br>
+
+2022

@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Statistical Tests</title>
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Explotory Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="base_salary.html">Base Salary</a>
+    </li>
+    <li>
+      <a href="job_employees.html">Job and Employee</a>
+    </li>
+    <li>
+      <a href="ot_other_pay.html">Over Time and Other Pay</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="stat.html">Statistical Tests</a>
+    </li>
+    <li>
+      <a href="payroll_association.html">Payroll association with county</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="project.html">Project Report</a>
+</li>
+<li>
+  <a href="mailto:&lt;you@youremail.com&gt;">
+    <span class="fa fa-play-circle-o"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/nergui85/nys_salary_project.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Statistical Tests</h1>
+
+</div>
+
+
+<pre class="r"><code>library(tidyverse)
+library(janitor)
+library(viridis)
+library(plotly)
+library(ggplot2)
+knitr::opts_chunk$set(
+    echo = TRUE,
+    warning = FALSE,
+    fig.width = 8, 
+  fig.height = 6,
+  out.width = &quot;90%&quot;
+)
+options(
+  ggplot2.continuous.colour = &quot;viridis&quot;,
+  ggplot2.continuous.fill = &quot;viridis&quot;
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code></pre>
+<pre class="r"><code>payroll_data = 
+    read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 594234 Columns: 10
+## ── Column specification ─────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
+## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<div id="anova-analysis" class="section level1">
+<h1>ANOVA Analysis</h1>
+<p>Null Hypothesis(Ho) = The mean base salary is constant for all
+counties</p>
+<p>Alternative Hypothesis(H1) = The mean base salary is different for
+all municipalities</p>
+<pre class="r"><code>ms_model = 
+  payroll_data %&gt;%
+  mutate(county_name = as.factor(county_name)) %&gt;%
+  group_by(county_name) %&gt;%
+  summarise(ms_mean = base_salary)</code></pre>
+<pre><code>## `summarise()` has grouped output by &#39;county_name&#39;. You can override using the `.groups`
+## argument.</code></pre>
+<pre class="r"><code>res = lm(ms_mean ~ factor(county_name), data = ms_model)
+
+anova_analysis = 
+    anova(res) %&gt;% 
+    broom::tidy() %&gt;% 
+    knitr::kable(caption = &quot;One Way Anova Test for Mean Salary by County&quot;)
+
+anova_analysis</code></pre>
+<table>
+<caption>One Way Anova Test for Mean Salary by County</caption>
+<colgroup>
+<col width="28%" />
+<col width="9%" />
+<col width="18%" />
+<col width="18%" />
+<col width="14%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="right">df</th>
+<th align="right">sumsq</th>
+<th align="right">meansq</th>
+<th align="right">statistic</th>
+<th align="right">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="right">15</td>
+<td align="right">3.805341e+13</td>
+<td align="right">2.536894e+12</td>
+<td align="right">1199.016</td>
+<td align="right">0</td>
+</tr>
+<tr class="even">
+<td align="left">Residuals</td>
+<td align="right">594218</td>
+<td align="right">1.257254e+15</td>
+<td align="right">2.115813e+09</td>
+<td align="right">NA</td>
+<td align="right">NA</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="tukey-test-for-mean-salary-by-county" class="section level1">
+<h1>Tukey test for Mean Salary by County</h1>
+<pre class="r"><code>res1 = aov(ms_mean ~ factor(county_name), data = ms_model)
+
+tukey_ms = TukeyHSD(res1)
+
+tukey_ms</code></pre>
+<pre><code>##   Tukey multiple comparisons of means
+##     95% family-wise confidence level
+## 
+## Fit: aov(formula = ms_mean ~ factor(county_name), data = ms_model)
+## 
+## $`factor(county_name)`
+##                                diff          lwr           upr     p adj
+## BRONX-ALBANY          -46793.672635  -90512.1734  -3075.171912 0.0222448
+## DELAWARE-ALBANY       -37028.785191  -84073.8941  10016.323741 0.3324215
+## DUTCHESS-ALBANY       -46795.579199  -99123.4667   5532.308303 0.1432005
+## GREENE-ALBANY         -44972.509532 -111258.7702  21313.751087 0.6052943
+## KINGS-ALBANY          -41916.067279  -85629.6490   1797.514460 0.0771545
+## NASSAU-ALBANY         -71164.422020 -121325.2335 -21003.610556 0.0001341
+## NEW YORK-ALBANY       -61724.589860 -105433.0877 -18016.091985 0.0001499
+## ORANGE-ALBANY         -44452.301533 -207992.1609 119087.557797 0.9999216
+## PUTNAM-ALBANY         -40564.933675  -90581.7796   9451.912253 0.2812590
+## QUEENS-ALBANY         -42864.041768  -86576.6770    848.593477 0.0615951
+## RICHMOND-ALBANY       -43922.761054  -87668.6783   -176.843758 0.0478351
+## SCHOHARIE-ALBANY      -35125.034981  -87724.9749  17474.904960 0.6329486
+## SULLIVAN-ALBANY       -31241.821142  -77115.5638  14631.921470 0.5985696
+## ULSTER-ALBANY         -27363.261353  -71913.6099  17187.087178 0.7627319
+## WESTCHESTER-ALBANY    -33863.274624  -78097.0292  10370.479944 0.3822703
+## DELAWARE-BRONX          9764.887443   -7664.8141  27194.588979 0.8674314
+## DUTCHESS-BRONX            -1.906564  -28790.0991  28786.286008 1.0000000
+## GREENE-BRONX            1821.163102  -48022.7991  51665.125305 1.0000000
+## KINGS-BRONX             4877.605356    3682.0094   6073.201277 0.0000000
+## NASSAU-BRONX          -24370.749386  -49001.2026    259.703877 0.0560434
+## NEW YORK-BRONX        -14930.917225  -15923.3927 -13938.441725 0.0000000
+## ORANGE-BRONX            2341.371101 -155252.5305 159935.272668 1.0000000
+## PUTNAM-BRONX            6228.738959  -18107.1830  30564.660922 0.9999637
+## QUEENS-BRONX            3929.630867    2769.1563   5090.105448 0.0000000
+## RICHMOND-BRONX          2870.911581     807.5403   4934.282908 0.0002127
+## SCHOHARIE-BRONX        11668.637654  -17611.1489  40948.424246 0.9932456
+## SULLIVAN-BRONX         15551.851493    1589.3130  29514.390032 0.0129459
+## ULSTER-BRONX           19430.411282   10753.6737  28107.148885 0.0000000
+## WESTCHESTER-BRONX      12930.398011    6061.8272  19798.968775 0.0000000
+## DUTCHESS-DELAWARE      -9766.794007  -43392.6026  23859.014541 0.9998199
+## GREENE-DELAWARE        -7943.724341  -60729.6651  44842.216373 1.0000000
+## KINGS-DELAWARE         -4887.282087  -22304.6418  12530.077603 0.9998829
+## NASSAU-DELAWARE       -34135.636829  -64278.5331  -3992.740537 0.0101729
+## NEW YORK-DELAWARE     -24695.804668  -42100.4011  -7291.208247 0.0001337
+## ORANGE-DELAWARE        -7423.516342 -165972.4765 151125.443856 1.0000000
+## PUTNAM-DELAWARE        -3536.148484  -33438.8585  26366.561540 1.0000000
+## QUEENS-DELAWARE        -5835.256577  -23250.2406  11579.727495 0.9989983
+## RICHMOND-DELAWARE      -6893.975863  -24392.3321  10604.380352 0.9940052
+## SCHOHARIE-DELAWARE      1903.750211  -32143.8763  35951.376734 1.0000000
+## SULLIVAN-DELAWARE       5786.964050  -16504.0084  28077.936469 0.9999564
+## ULSTER-DELAWARE         9665.523839   -9756.6476  29087.695303 0.9460342
+## WESTCHESTER-DELAWARE    3165.510568  -15519.0347  21850.055874 0.9999999
+## GREENE-DUTCHESS         1823.069667  -55721.0097  59367.149058 1.0000000
+## KINGS-DUTCHESS          4879.511920  -23901.2100  33660.233845 0.9999999
+## NASSAU-DUTCHESS       -24368.842821  -62231.2217  13493.536037 0.6937833
+## NEW YORK-DUTCHESS     -14929.010661  -43702.0104  13843.989053 0.9245775
+## ORANGE-DUTCHESS         2343.277666 -157852.6596 162539.214930 1.0000000
+## PUTNAM-DUTCHESS         6230.645524  -31440.7973  43902.088325 0.9999999
+## QUEENS-DUTCHESS         3931.537431  -24847.7469  32710.821755 1.0000000
+## RICHMOND-DUTCHESS       2872.818145  -25956.9929  31702.629212 1.0000000
+## SCHOHARIE-DUTCHESS     11670.544218  -29368.5397  52709.628124 0.9998615
+## SULLIVAN-DUTCHESS      15553.758057  -16412.6773  47520.193382 0.9553143
+## ULSTER-DUTCHESS        19432.317846  -10604.0981  49468.733750 0.6855515
+## WESTCHESTER-DUTCHESS   12932.304575  -16632.5017  42497.110837 0.9829191
+## KINGS-GREENE            3056.442253  -46783.2055  52896.090036 1.0000000
+## NASSAU-GREENE         -26191.912488  -81772.6670  29388.841999 0.9661308
+## NEW YORK-GREENE       -16752.080328  -66587.2692  33083.108536 0.9989603
+## ORANGE-GREENE            520.207999 -164762.5765 165802.992500 1.0000000
+## PUTNAM-GREENE           4407.575857  -51043.2865  59858.438242 1.0000000
+## QUEENS-GREENE           2108.467764  -47730.3499  51947.285394 1.0000000
+## RICHMOND-GREENE         1049.748478  -48818.2627  50917.759695 1.0000000
+## SCHOHARIE-GREENE        9847.474552  -47944.1074  67639.056502 0.9999999
+## SULLIVAN-GREENE        13730.688390  -38014.0072  65475.384002 0.9999423
+## ULSTER-GREENE          17609.248179  -32965.9119  68184.408257 0.9984440
+## WESTCHESTER-GREENE     11109.234909  -39187.2690  61405.738821 0.9999948
+## NASSAU-KINGS          -29248.354742  -53870.0759  -4626.633623 0.0048128
+## NEW YORK-KINGS        -19808.522581  -20553.4592 -19063.585952 0.0000000
+## ORANGE-KINGS           -2536.234255 -160128.7713 155056.302796 1.0000000
+## PUTNAM-KINGS            1351.133603  -22975.9505  25678.217702 1.0000000
+## QUEENS-KINGS            -947.974489   -1905.3794      9.430451 0.0556275
+## RICHMOND-KINGS         -2006.693775   -3963.0742    -50.313394 0.0375474
+## SCHOHARIE-KINGS         6791.032298  -22481.4091  36063.473704 0.9999900
+## SULLIVAN-KINGS         10674.246137   -3272.8828  24621.375068 0.3827873
+## ULSTER-KINGS           14552.805926    5900.8872  23204.724696 0.0000010
+## WESTCHESTER-KINGS       8052.792655    1215.6012  14889.984133 0.0055358
+## NEW YORK-NASSAU         9439.832160  -15172.8619  34052.526220 0.9954854
+## ORANGE-NASSAU          26712.120487 -132789.0943 186213.335254 0.9999999
+## PUTNAM-NASSAU          30599.488345   -3998.7312  65197.707939 0.1562546
+## QUEENS-NASSAU          28300.380252    3680.3396  52920.420921 0.0081241
+## RICHMOND-NASSAU        27241.660966    2562.5767  51920.745278 0.0146993
+## SCHOHARIE-NASSAU       36039.387040   -2198.1025  74276.876551 0.0909144
+## SULLIVAN-NASSAU        39922.600878   11642.7108  68202.490972 0.0001511
+## ULSTER-NASSAU          43801.160667   17722.7122  69879.609178 0.0000010
+## WESTCHESTER-NASSAU     37301.147397   11767.3078  62834.987014 0.0000647
+## ORANGE-NEW YORK        17272.288326 -140318.8386 174863.415272 1.0000000
+## PUTNAM-NEW YORK        21159.656185   -3158.2915  45477.603852 0.1767366
+## QUEENS-NEW YORK        18860.548092   18173.3929  19547.703264 0.0000000
+## RICHMOND-NEW YORK      17801.828806   15962.5403  19641.117312 0.0000000
+## SCHOHARIE-NEW YORK     26599.554879   -2665.2941  55864.403826 0.1253369
+## SULLIVAN-NEW YORK      30482.768718   16551.5820  44413.955438 0.0000000
+## ULSTER-NEW YORK        34361.328507   25735.1326  42987.524448 0.0000000
+## WESTCHESTER-NEW YORK   27861.315236   21056.7032  34665.927298 0.0000000
+## PUTNAM-ORANGE           3887.367858 -155568.6304 163343.366121 1.0000000
+## QUEENS-ORANGE           1588.259765 -156004.0147 159180.534277 1.0000000
+## RICHMOND-ORANGE          529.540479 -157071.9690 158131.049944 1.0000000
+## SCHOHARIE-ORANGE        9327.266553 -150957.7427 169612.275793 1.0000000
+## SULLIVAN-ORANGE        13210.480392 -144994.8633 171415.824065 1.0000000
+## ULSTER-ORANGE          17089.040181 -140737.6498 174915.730128 1.0000000
+## WESTCHESTER-ORANGE     10589.026910 -147148.5892 168326.643060 1.0000000
+## QUEENS-PUTNAM          -2299.108093  -26624.4914  22026.275201 1.0000000
+## RICHMOND-PUTNAM        -3357.827379  -27742.9678  21027.313022 1.0000000
+## SCHOHARIE-PUTNAM        5439.898695  -32608.5372  43488.334589 1.0000000
+## SULLIVAN-PUTNAM         9323.112533  -18700.6284  37346.853426 0.9990780
+## ULSTER-PUTNAM          13201.672323  -12598.7801  39002.124772 0.9324023
+## WESTCHESTER-PUTNAM      6701.659052  -18548.1892  31951.507279 0.9999421
+## RICHMOND-QUEENS        -1058.719286   -2993.8358    876.397208 0.8878165
+## SCHOHARIE-QUEENS        7739.006787  -21532.0212  37010.034742 0.9999449
+## SULLIVAN-QUEENS        11622.220626   -2321.9415  25566.382740 0.2377715
+## ULSTER-QUEENS          15500.780415    6853.6450  24147.915782 0.0000001
+## WESTCHESTER-QUEENS      9000.767144    2169.6297  15831.904601 0.0007032
+## SCHOHARIE-RICHMOND      8797.726073  -20522.9812  38118.433389 0.9997313
+## SULLIVAN-RICHMOND      12680.939912   -1367.2079  26729.087727 0.1327340
+## ULSTER-RICHMOND        16559.499701    7745.6611  25373.338254 0.0000000
+## WESTCHESTER-RICHMOND   10059.486430    3018.5178  17100.455038 0.0001131
+## SULLIVAN-SCHOHARIE      3883.213839  -28526.6436  36293.071270 1.0000000
+## ULSTER-SCHOHARIE        7761.773628  -22746.1295  38269.676730 0.9999665
+## WESTCHESTER-SCHOHARIE   1261.760357  -28781.9352  31305.455879 1.0000000
+## ULSTER-SULLIVAN         3878.559789  -12503.7090  20260.828595 0.9999869
+## WESTCHESTER-SULLIVAN   -2621.453482  -18122.1057  12879.198767 0.9999999
+## WESTCHESTER-ULSTER     -6500.013271  -17481.9764   4481.949811 0.8099179</code></pre>
+<pre class="r"><code>tukey_table = 
+    tukey_ms %&gt;% 
+    broom::tidy() %&gt;%
+    knitr::kable(caption = &quot;Tukey Test for Mean Salary by County&quot;)
+
+tukey_table</code></pre>
+<table style="width:100%;">
+<caption>Tukey Test for Mean Salary by County</caption>
+<colgroup>
+<col width="18%" />
+<col width="20%" />
+<col width="10%" />
+<col width="13%" />
+<col width="12%" />
+<col width="13%" />
+<col width="11%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">term</th>
+<th align="left">contrast</th>
+<th align="right">null.value</th>
+<th align="right">estimate</th>
+<th align="right">conf.low</th>
+<th align="right">conf.high</th>
+<th align="right">adj.p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">BRONX-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-46793.672635</td>
+<td align="right">-90512.1734</td>
+<td align="right">-3075.171912</td>
+<td align="right">0.0222448</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">DELAWARE-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-37028.785191</td>
+<td align="right">-84073.8941</td>
+<td align="right">10016.323741</td>
+<td align="right">0.3324215</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">DUTCHESS-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-46795.579199</td>
+<td align="right">-99123.4667</td>
+<td align="right">5532.308303</td>
+<td align="right">0.1432005</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">GREENE-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-44972.509532</td>
+<td align="right">-111258.7702</td>
+<td align="right">21313.751087</td>
+<td align="right">0.6052943</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">KINGS-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-41916.067279</td>
+<td align="right">-85629.6490</td>
+<td align="right">1797.514460</td>
+<td align="right">0.0771545</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-71164.422020</td>
+<td align="right">-121325.2335</td>
+<td align="right">-21003.610556</td>
+<td align="right">0.0001341</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-61724.589860</td>
+<td align="right">-105433.0877</td>
+<td align="right">-18016.091985</td>
+<td align="right">0.0001499</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-44452.301533</td>
+<td align="right">-207992.1609</td>
+<td align="right">119087.557797</td>
+<td align="right">0.9999216</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-40564.933675</td>
+<td align="right">-90581.7796</td>
+<td align="right">9451.912253</td>
+<td align="right">0.2812590</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-42864.041768</td>
+<td align="right">-86576.6770</td>
+<td align="right">848.593477</td>
+<td align="right">0.0615951</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-43922.761054</td>
+<td align="right">-87668.6783</td>
+<td align="right">-176.843758</td>
+<td align="right">0.0478351</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-35125.034981</td>
+<td align="right">-87724.9749</td>
+<td align="right">17474.904959</td>
+<td align="right">0.6329486</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-31241.821142</td>
+<td align="right">-77115.5638</td>
+<td align="right">14631.921470</td>
+<td align="right">0.5985696</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-27363.261353</td>
+<td align="right">-71913.6099</td>
+<td align="right">17187.087179</td>
+<td align="right">0.7627319</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-ALBANY</td>
+<td align="right">0</td>
+<td align="right">-33863.274624</td>
+<td align="right">-78097.0292</td>
+<td align="right">10370.479944</td>
+<td align="right">0.3822703</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">DELAWARE-BRONX</td>
+<td align="right">0</td>
+<td align="right">9764.887443</td>
+<td align="right">-7664.8141</td>
+<td align="right">27194.588978</td>
+<td align="right">0.8674314</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">DUTCHESS-BRONX</td>
+<td align="right">0</td>
+<td align="right">-1.906564</td>
+<td align="right">-28790.0991</td>
+<td align="right">28786.286008</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">GREENE-BRONX</td>
+<td align="right">0</td>
+<td align="right">1821.163102</td>
+<td align="right">-48022.7991</td>
+<td align="right">51665.125305</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">KINGS-BRONX</td>
+<td align="right">0</td>
+<td align="right">4877.605356</td>
+<td align="right">3682.0094</td>
+<td align="right">6073.201276</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-BRONX</td>
+<td align="right">0</td>
+<td align="right">-24370.749386</td>
+<td align="right">-49001.2026</td>
+<td align="right">259.703877</td>
+<td align="right">0.0560434</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-BRONX</td>
+<td align="right">0</td>
+<td align="right">-14930.917225</td>
+<td align="right">-15923.3927</td>
+<td align="right">-13938.441726</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-BRONX</td>
+<td align="right">0</td>
+<td align="right">2341.371101</td>
+<td align="right">-155252.5305</td>
+<td align="right">159935.272668</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-BRONX</td>
+<td align="right">0</td>
+<td align="right">6228.738959</td>
+<td align="right">-18107.1830</td>
+<td align="right">30564.660922</td>
+<td align="right">0.9999637</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-BRONX</td>
+<td align="right">0</td>
+<td align="right">3929.630867</td>
+<td align="right">2769.1563</td>
+<td align="right">5090.105448</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-BRONX</td>
+<td align="right">0</td>
+<td align="right">2870.911581</td>
+<td align="right">807.5403</td>
+<td align="right">4934.282908</td>
+<td align="right">0.0002127</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-BRONX</td>
+<td align="right">0</td>
+<td align="right">11668.637654</td>
+<td align="right">-17611.1489</td>
+<td align="right">40948.424246</td>
+<td align="right">0.9932456</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-BRONX</td>
+<td align="right">0</td>
+<td align="right">15551.851493</td>
+<td align="right">1589.3130</td>
+<td align="right">29514.390031</td>
+<td align="right">0.0129459</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-BRONX</td>
+<td align="right">0</td>
+<td align="right">19430.411282</td>
+<td align="right">10753.6737</td>
+<td align="right">28107.148885</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-BRONX</td>
+<td align="right">0</td>
+<td align="right">12930.398011</td>
+<td align="right">6061.8272</td>
+<td align="right">19798.968775</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">DUTCHESS-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-9766.794007</td>
+<td align="right">-43392.6026</td>
+<td align="right">23859.014541</td>
+<td align="right">0.9998199</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">GREENE-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-7943.724341</td>
+<td align="right">-60729.6651</td>
+<td align="right">44842.216373</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">KINGS-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-4887.282087</td>
+<td align="right">-22304.6418</td>
+<td align="right">12530.077603</td>
+<td align="right">0.9998829</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-34135.636829</td>
+<td align="right">-64278.5331</td>
+<td align="right">-3992.740537</td>
+<td align="right">0.0101729</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-24695.804668</td>
+<td align="right">-42100.4011</td>
+<td align="right">-7291.208247</td>
+<td align="right">0.0001337</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-7423.516342</td>
+<td align="right">-165972.4765</td>
+<td align="right">151125.443856</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-3536.148484</td>
+<td align="right">-33438.8585</td>
+<td align="right">26366.561540</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-5835.256576</td>
+<td align="right">-23250.2406</td>
+<td align="right">11579.727495</td>
+<td align="right">0.9989983</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">-6893.975863</td>
+<td align="right">-24392.3321</td>
+<td align="right">10604.380352</td>
+<td align="right">0.9940052</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">1903.750211</td>
+<td align="right">-32143.8763</td>
+<td align="right">35951.376734</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">5786.964050</td>
+<td align="right">-16504.0084</td>
+<td align="right">28077.936469</td>
+<td align="right">0.9999564</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">9665.523839</td>
+<td align="right">-9756.6476</td>
+<td align="right">29087.695303</td>
+<td align="right">0.9460342</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-DELAWARE</td>
+<td align="right">0</td>
+<td align="right">3165.510568</td>
+<td align="right">-15519.0347</td>
+<td align="right">21850.055874</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">GREENE-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">1823.069667</td>
+<td align="right">-55721.0097</td>
+<td align="right">59367.149058</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">KINGS-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">4879.511920</td>
+<td align="right">-23901.2100</td>
+<td align="right">33660.233845</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">-24368.842821</td>
+<td align="right">-62231.2217</td>
+<td align="right">13493.536037</td>
+<td align="right">0.6937833</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">-14929.010661</td>
+<td align="right">-43702.0104</td>
+<td align="right">13843.989053</td>
+<td align="right">0.9245775</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">2343.277665</td>
+<td align="right">-157852.6596</td>
+<td align="right">162539.214930</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">6230.645524</td>
+<td align="right">-31440.7973</td>
+<td align="right">43902.088325</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">3931.537431</td>
+<td align="right">-24847.7469</td>
+<td align="right">32710.821755</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">2872.818145</td>
+<td align="right">-25956.9929</td>
+<td align="right">31702.629212</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">11670.544218</td>
+<td align="right">-29368.5397</td>
+<td align="right">52709.628124</td>
+<td align="right">0.9998615</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">15553.758057</td>
+<td align="right">-16412.6773</td>
+<td align="right">47520.193382</td>
+<td align="right">0.9553143</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">19432.317846</td>
+<td align="right">-10604.0981</td>
+<td align="right">49468.733750</td>
+<td align="right">0.6855515</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-DUTCHESS</td>
+<td align="right">0</td>
+<td align="right">12932.304575</td>
+<td align="right">-16632.5017</td>
+<td align="right">42497.110837</td>
+<td align="right">0.9829191</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">KINGS-GREENE</td>
+<td align="right">0</td>
+<td align="right">3056.442253</td>
+<td align="right">-46783.2055</td>
+<td align="right">52896.090036</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-GREENE</td>
+<td align="right">0</td>
+<td align="right">-26191.912488</td>
+<td align="right">-81772.6670</td>
+<td align="right">29388.841999</td>
+<td align="right">0.9661308</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-GREENE</td>
+<td align="right">0</td>
+<td align="right">-16752.080328</td>
+<td align="right">-66587.2692</td>
+<td align="right">33083.108536</td>
+<td align="right">0.9989603</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-GREENE</td>
+<td align="right">0</td>
+<td align="right">520.207999</td>
+<td align="right">-164762.5765</td>
+<td align="right">165802.992500</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-GREENE</td>
+<td align="right">0</td>
+<td align="right">4407.575857</td>
+<td align="right">-51043.2865</td>
+<td align="right">59858.438242</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-GREENE</td>
+<td align="right">0</td>
+<td align="right">2108.467764</td>
+<td align="right">-47730.3499</td>
+<td align="right">51947.285394</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-GREENE</td>
+<td align="right">0</td>
+<td align="right">1049.748478</td>
+<td align="right">-48818.2627</td>
+<td align="right">50917.759694</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-GREENE</td>
+<td align="right">0</td>
+<td align="right">9847.474551</td>
+<td align="right">-47944.1074</td>
+<td align="right">67639.056502</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-GREENE</td>
+<td align="right">0</td>
+<td align="right">13730.688390</td>
+<td align="right">-38014.0072</td>
+<td align="right">65475.384002</td>
+<td align="right">0.9999423</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-GREENE</td>
+<td align="right">0</td>
+<td align="right">17609.248179</td>
+<td align="right">-32965.9119</td>
+<td align="right">68184.408257</td>
+<td align="right">0.9984440</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-GREENE</td>
+<td align="right">0</td>
+<td align="right">11109.234909</td>
+<td align="right">-39187.2690</td>
+<td align="right">61405.738821</td>
+<td align="right">0.9999948</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NASSAU-KINGS</td>
+<td align="right">0</td>
+<td align="right">-29248.354741</td>
+<td align="right">-53870.0759</td>
+<td align="right">-4626.633622</td>
+<td align="right">0.0048128</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-KINGS</td>
+<td align="right">0</td>
+<td align="right">-19808.522581</td>
+<td align="right">-20553.4592</td>
+<td align="right">-19063.585952</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-KINGS</td>
+<td align="right">0</td>
+<td align="right">-2536.234255</td>
+<td align="right">-160128.7713</td>
+<td align="right">155056.302796</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-KINGS</td>
+<td align="right">0</td>
+<td align="right">1351.133603</td>
+<td align="right">-22975.9505</td>
+<td align="right">25678.217702</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-KINGS</td>
+<td align="right">0</td>
+<td align="right">-947.974489</td>
+<td align="right">-1905.3794</td>
+<td align="right">9.430451</td>
+<td align="right">0.0556275</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-KINGS</td>
+<td align="right">0</td>
+<td align="right">-2006.693775</td>
+<td align="right">-3963.0742</td>
+<td align="right">-50.313394</td>
+<td align="right">0.0375474</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-KINGS</td>
+<td align="right">0</td>
+<td align="right">6791.032298</td>
+<td align="right">-22481.4091</td>
+<td align="right">36063.473704</td>
+<td align="right">0.9999900</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-KINGS</td>
+<td align="right">0</td>
+<td align="right">10674.246137</td>
+<td align="right">-3272.8828</td>
+<td align="right">24621.375068</td>
+<td align="right">0.3827873</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-KINGS</td>
+<td align="right">0</td>
+<td align="right">14552.805926</td>
+<td align="right">5900.8872</td>
+<td align="right">23204.724696</td>
+<td align="right">0.0000010</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-KINGS</td>
+<td align="right">0</td>
+<td align="right">8052.792655</td>
+<td align="right">1215.6012</td>
+<td align="right">14889.984133</td>
+<td align="right">0.0055358</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">NEW YORK-NASSAU</td>
+<td align="right">0</td>
+<td align="right">9439.832160</td>
+<td align="right">-15172.8619</td>
+<td align="right">34052.526220</td>
+<td align="right">0.9954854</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-NASSAU</td>
+<td align="right">0</td>
+<td align="right">26712.120487</td>
+<td align="right">-132789.0943</td>
+<td align="right">186213.335254</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-NASSAU</td>
+<td align="right">0</td>
+<td align="right">30599.488345</td>
+<td align="right">-3998.7312</td>
+<td align="right">65197.707939</td>
+<td align="right">0.1562546</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-NASSAU</td>
+<td align="right">0</td>
+<td align="right">28300.380252</td>
+<td align="right">3680.3396</td>
+<td align="right">52920.420921</td>
+<td align="right">0.0081241</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-NASSAU</td>
+<td align="right">0</td>
+<td align="right">27241.660966</td>
+<td align="right">2562.5767</td>
+<td align="right">51920.745278</td>
+<td align="right">0.0146993</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-NASSAU</td>
+<td align="right">0</td>
+<td align="right">36039.387040</td>
+<td align="right">-2198.1025</td>
+<td align="right">74276.876551</td>
+<td align="right">0.0909144</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-NASSAU</td>
+<td align="right">0</td>
+<td align="right">39922.600878</td>
+<td align="right">11642.7108</td>
+<td align="right">68202.490972</td>
+<td align="right">0.0001511</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-NASSAU</td>
+<td align="right">0</td>
+<td align="right">43801.160668</td>
+<td align="right">17722.7122</td>
+<td align="right">69879.609178</td>
+<td align="right">0.0000010</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-NASSAU</td>
+<td align="right">0</td>
+<td align="right">37301.147396</td>
+<td align="right">11767.3078</td>
+<td align="right">62834.987014</td>
+<td align="right">0.0000647</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ORANGE-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">17272.288326</td>
+<td align="right">-140318.8386</td>
+<td align="right">174863.415272</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">21159.656184</td>
+<td align="right">-3158.2915</td>
+<td align="right">45477.603852</td>
+<td align="right">0.1767366</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">18860.548092</td>
+<td align="right">18173.3929</td>
+<td align="right">19547.703264</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">17801.828806</td>
+<td align="right">15962.5403</td>
+<td align="right">19641.117312</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">26599.554879</td>
+<td align="right">-2665.2941</td>
+<td align="right">55864.403826</td>
+<td align="right">0.1253369</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">30482.768718</td>
+<td align="right">16551.5820</td>
+<td align="right">44413.955438</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">34361.328507</td>
+<td align="right">25735.1326</td>
+<td align="right">42987.524448</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-NEW YORK</td>
+<td align="right">0</td>
+<td align="right">27861.315236</td>
+<td align="right">21056.7032</td>
+<td align="right">34665.927298</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">PUTNAM-ORANGE</td>
+<td align="right">0</td>
+<td align="right">3887.367858</td>
+<td align="right">-155568.6304</td>
+<td align="right">163343.366121</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-ORANGE</td>
+<td align="right">0</td>
+<td align="right">1588.259765</td>
+<td align="right">-156004.0147</td>
+<td align="right">159180.534277</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-ORANGE</td>
+<td align="right">0</td>
+<td align="right">529.540479</td>
+<td align="right">-157071.9690</td>
+<td align="right">158131.049944</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-ORANGE</td>
+<td align="right">0</td>
+<td align="right">9327.266553</td>
+<td align="right">-150957.7427</td>
+<td align="right">169612.275793</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-ORANGE</td>
+<td align="right">0</td>
+<td align="right">13210.480392</td>
+<td align="right">-144994.8633</td>
+<td align="right">171415.824065</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-ORANGE</td>
+<td align="right">0</td>
+<td align="right">17089.040181</td>
+<td align="right">-140737.6498</td>
+<td align="right">174915.730128</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-ORANGE</td>
+<td align="right">0</td>
+<td align="right">10589.026910</td>
+<td align="right">-147148.5892</td>
+<td align="right">168326.643060</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">QUEENS-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">-2299.108093</td>
+<td align="right">-26624.4914</td>
+<td align="right">22026.275201</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">-3357.827379</td>
+<td align="right">-27742.9678</td>
+<td align="right">21027.313022</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">5439.898695</td>
+<td align="right">-32608.5372</td>
+<td align="right">43488.334589</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">9323.112533</td>
+<td align="right">-18700.6284</td>
+<td align="right">37346.853426</td>
+<td align="right">0.9990780</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">13201.672323</td>
+<td align="right">-12598.7801</td>
+<td align="right">39002.124772</td>
+<td align="right">0.9324023</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-PUTNAM</td>
+<td align="right">0</td>
+<td align="right">6701.659052</td>
+<td align="right">-18548.1892</td>
+<td align="right">31951.507279</td>
+<td align="right">0.9999421</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">RICHMOND-QUEENS</td>
+<td align="right">0</td>
+<td align="right">-1058.719286</td>
+<td align="right">-2993.8358</td>
+<td align="right">876.397209</td>
+<td align="right">0.8878165</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-QUEENS</td>
+<td align="right">0</td>
+<td align="right">7739.006787</td>
+<td align="right">-21532.0212</td>
+<td align="right">37010.034742</td>
+<td align="right">0.9999449</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-QUEENS</td>
+<td align="right">0</td>
+<td align="right">11622.220626</td>
+<td align="right">-2321.9415</td>
+<td align="right">25566.382740</td>
+<td align="right">0.2377715</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-QUEENS</td>
+<td align="right">0</td>
+<td align="right">15500.780415</td>
+<td align="right">6853.6450</td>
+<td align="right">24147.915782</td>
+<td align="right">0.0000001</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-QUEENS</td>
+<td align="right">0</td>
+<td align="right">9000.767144</td>
+<td align="right">2169.6297</td>
+<td align="right">15831.904601</td>
+<td align="right">0.0007032</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SCHOHARIE-RICHMOND</td>
+<td align="right">0</td>
+<td align="right">8797.726073</td>
+<td align="right">-20522.9812</td>
+<td align="right">38118.433389</td>
+<td align="right">0.9997313</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-RICHMOND</td>
+<td align="right">0</td>
+<td align="right">12680.939912</td>
+<td align="right">-1367.2079</td>
+<td align="right">26729.087727</td>
+<td align="right">0.1327340</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-RICHMOND</td>
+<td align="right">0</td>
+<td align="right">16559.499701</td>
+<td align="right">7745.6611</td>
+<td align="right">25373.338254</td>
+<td align="right">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-RICHMOND</td>
+<td align="right">0</td>
+<td align="right">10059.486430</td>
+<td align="right">3018.5178</td>
+<td align="right">17100.455038</td>
+<td align="right">0.0001131</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">SULLIVAN-SCHOHARIE</td>
+<td align="right">0</td>
+<td align="right">3883.213839</td>
+<td align="right">-28526.6436</td>
+<td align="right">36293.071270</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-SCHOHARIE</td>
+<td align="right">0</td>
+<td align="right">7761.773628</td>
+<td align="right">-22746.1295</td>
+<td align="right">38269.676730</td>
+<td align="right">0.9999665</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-SCHOHARIE</td>
+<td align="right">0</td>
+<td align="right">1261.760357</td>
+<td align="right">-28781.9352</td>
+<td align="right">31305.455879</td>
+<td align="right">1.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">ULSTER-SULLIVAN</td>
+<td align="right">0</td>
+<td align="right">3878.559789</td>
+<td align="right">-12503.7090</td>
+<td align="right">20260.828595</td>
+<td align="right">0.9999869</td>
+</tr>
+<tr class="odd">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-SULLIVAN</td>
+<td align="right">0</td>
+<td align="right">-2621.453482</td>
+<td align="right">-18122.1057</td>
+<td align="right">12879.198767</td>
+<td align="right">0.9999999</td>
+</tr>
+<tr class="even">
+<td align="left">factor(county_name)</td>
+<td align="left">WESTCHESTER-ULSTER</td>
+<td align="right">0</td>
+<td align="right">-6500.013271</td>
+<td align="right">-17481.9764</td>
+<td align="right">4481.949811</td>
+<td align="right">0.8099179</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

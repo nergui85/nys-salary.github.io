@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Base Salary</title>
+
+<script src="site_libs/header-attrs-2.16/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.4/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.10.0/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.0/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-2.5.1/plotly-latest.min.js"></script>
+<link href="site_libs/font-awesome-5.1.0/css/all.css" rel="stylesheet" />
+<link href="site_libs/font-awesome-5.1.0/css/v4-shims.css" rel="stylesheet" />
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Home</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Explotory Analyses
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="base_salary.html">Base Salary</a>
+    </li>
+    <li>
+      <a href="job_employees.html">Job and Employee</a>
+    </li>
+    <li>
+      <a href="ot_other_pay.html">Over Time and Other Pay</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Statistical Analysis
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="stat.html">Statistical Tests</a>
+    </li>
+    <li>
+      <a href="payroll_association.html">Payroll association with county</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="project.html">Project Report</a>
+</li>
+<li>
+  <a href="mailto:&lt;you@youremail.com&gt;">
+    <span class="fa fa-play-circle-o"></span>
+     
+  </a>
+</li>
+<li>
+  <a href="https://github.com/nergui85/nys_salary_project.github.io">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Base Salary</h1>
+
+</div>
+
+
+<center>
+<img src="images/wall_street_workers.jpg" style="width:100%">
+</center>
+<div id="mean-base-salary-by-new-york-counties" class="section level3">
+<h3>Mean Base Salary By New York Counties</h3>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching packages ──────────────────────────────────────────────────────── tidyverse 1.3.2 ──
+## ✔ ggplot2 3.4.0      ✔ purrr   0.3.4 
+## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
+## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
+## ✔ readr   2.1.2      ✔ forcats 0.5.2 
+## ── Conflicts ─────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()</code></pre>
+<pre class="r"><code>library(janitor)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;janitor&#39;
+## 
+## The following objects are masked from &#39;package:stats&#39;:
+## 
+##     chisq.test, fisher.test</code></pre>
+<pre class="r"><code>library(viridis)</code></pre>
+<pre><code>## Loading required package: viridisLite</code></pre>
+<pre class="r"><code>library(plotly)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;plotly&#39;
+## 
+## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     last_plot
+## 
+## The following object is masked from &#39;package:stats&#39;:
+## 
+##     filter
+## 
+## The following object is masked from &#39;package:graphics&#39;:
+## 
+##     layout</code></pre>
+<pre class="r"><code>library(ggplot2)
+knitr::opts_chunk$set(
+    echo = TRUE,
+    warning = FALSE,
+    fig.width = 8, 
+  fig.height = 6,
+  out.width = &quot;90%&quot;
+)
+options(
+  ggplot2.continuous.colour = &quot;viridis&quot;,
+  ggplot2.continuous.fill = &quot;viridis&quot;
+)
+scale_colour_discrete = scale_colour_viridis_d
+scale_fill_discrete = scale_fill_viridis_d
+theme_set(theme_minimal() + theme(legend.position = &quot;bottom&quot;))</code></pre>
+<pre class="r"><code>payroll_data = 
+    read_csv(&quot;data/payroll_data.csv&quot;)</code></pre>
+<pre><code>## Rows: 594234 Columns: 10
+## ── Column specification ─────────────────────────────────────────────────────────────────────────
+## Delimiter: &quot;,&quot;
+## chr (5): agency_name, pay_basis, leave_status, county_name, job_title
+## dbl (5): fiscal_year, start_year, base_salary, total_ot_paid, total_other_pay
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>mean_base_salary_plot =
+  payroll_data %&gt;%
+  group_by(county_name) %&gt;%
+  summarize(
+      mean_base_salary = mean(base_salary, na.rm = TRUE)) %&gt;%
+        plot_ly(x = ~ reorder(county_name, mean_base_salary), y = ~ mean_base_salary, color = ~county_name,  type = &quot;box&quot;, colors = &quot;viridis&quot;)  
+
+
+mean_base_salary_plot |&gt; layout(yaxis = list(title = &quot;Mean Base Salary&quot;),title = &quot;The Average Base Salary for Municipal Employees of New York State By County&quot;,
+                xaxis = list(title = &quot;County Names&quot;))</code></pre>
+<div id="htmlwidget-332175316d5184b7bdbd" style="width:90%;height:576px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-332175316d5184b7bdbd">{"x":{"visdat":{"48fa656a4c8c":["function () ","plotlyVisDat"]},"cur_data":"48fa656a4c8c","attrs":{"48fa656a4c8c":{"x":{},"y":{},"color":{},"colors":"viridis","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"box"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"yaxis":{"domain":[0,1],"automargin":true,"title":"Mean Base Salary"},"title":"The Average Base Salary for Municipal Employees of New York State By County","xaxis":{"domain":[0,1],"automargin":true,"title":"County Names","type":"category","categoryorder":"array","categoryarray":["NASSAU","NEW YORK","DUTCHESS","BRONX","GREENE","ORANGE","RICHMOND","QUEENS","KINGS","PUTNAM","DELAWARE","SCHOHARIE","WESTCHESTER","SULLIVAN","ULSTER","ALBANY"]},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"fillcolor":"rgba(68,1,84,0.5)","x":["ALBANY"],"y":[104555.301538462],"type":"box","name":"ALBANY","marker":{"color":"rgba(68,1,84,1)","line":{"color":"rgba(68,1,84,1)"}},"line":{"color":"rgba(68,1,84,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(72,26,108,0.5)","x":["BRONX"],"y":[57761.628897458],"type":"box","name":"BRONX","marker":{"color":"rgba(72,26,108,1)","line":{"color":"rgba(72,26,108,1)"}},"line":{"color":"rgba(72,26,108,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(71,47,125,0.5)","x":["DELAWARE"],"y":[67526.5163414634],"type":"box","name":"DELAWARE","marker":{"color":"rgba(71,47,125,1)","line":{"color":"rgba(71,47,125,1)"}},"line":{"color":"rgba(71,47,125,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(65,68,135,0.5)","x":["DUTCHESS"],"y":[57759.7223333333],"type":"box","name":"DUTCHESS","marker":{"color":"rgba(65,68,135,1)","line":{"color":"rgba(65,68,135,1)"}},"line":{"color":"rgba(65,68,135,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(57,86,140,0.5)","x":["GREENE"],"y":[59582.792],"type":"box","name":"GREENE","marker":{"color":"rgba(57,86,140,1)","line":{"color":"rgba(57,86,140,1)"}},"line":{"color":"rgba(57,86,140,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(49,104,142,0.5)","x":["KINGS"],"y":[62639.2342540392],"type":"box","name":"KINGS","marker":{"color":"rgba(49,104,142,1)","line":{"color":"rgba(49,104,142,1)"}},"line":{"color":"rgba(49,104,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(42,120,142,0.5)","x":["NASSAU"],"y":[33390.8795121951],"type":"box","name":"NASSAU","marker":{"color":"rgba(42,120,142,1)","line":{"color":"rgba(42,120,142,1)"}},"line":{"color":"rgba(42,120,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(35,136,142,0.5)","x":["NEW YORK"],"y":[42830.7116725727],"type":"box","name":"NEW YORK","marker":{"color":"rgba(35,136,142,1)","line":{"color":"rgba(35,136,142,1)"}},"line":{"color":"rgba(35,136,142,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(31,152,139,0.5)","x":["ORANGE"],"y":[60103],"type":"box","name":"ORANGE","marker":{"color":"rgba(31,152,139,1)","line":{"color":"rgba(31,152,139,1)"}},"line":{"color":"rgba(31,152,139,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(34,168,132,0.5)","x":["PUTNAM"],"y":[63990.3678571429],"type":"box","name":"PUTNAM","marker":{"color":"rgba(34,168,132,1)","line":{"color":"rgba(34,168,132,1)"}},"line":{"color":"rgba(34,168,132,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(53,183,121,0.5)","x":["QUEENS"],"y":[61691.259764459],"type":"box","name":"QUEENS","marker":{"color":"rgba(53,183,121,1)","line":{"color":"rgba(53,183,121,1)"}},"line":{"color":"rgba(53,183,121,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(84,197,104,0.5)","x":["RICHMOND"],"y":[60632.5404783599],"type":"box","name":"RICHMOND","marker":{"color":"rgba(84,197,104,1)","line":{"color":"rgba(84,197,104,1)"}},"line":{"color":"rgba(84,197,104,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(122,209,81,0.5)","x":["SCHOHARIE"],"y":[69430.2665517241],"type":"box","name":"SCHOHARIE","marker":{"color":"rgba(122,209,81,1)","line":{"color":"rgba(122,209,81,1)"}},"line":{"color":"rgba(122,209,81,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(165,219,54,0.5)","x":["SULLIVAN"],"y":[73313.480390625],"type":"box","name":"SULLIVAN","marker":{"color":"rgba(165,219,54,1)","line":{"color":"rgba(165,219,54,1)"}},"line":{"color":"rgba(165,219,54,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(210,226,27,0.5)","x":["ULSTER"],"y":[77192.0401796407],"type":"box","name":"ULSTER","marker":{"color":"rgba(210,226,27,1)","line":{"color":"rgba(210,226,27,1)"}},"line":{"color":"rgba(210,226,27,1)"},"xaxis":"x","yaxis":"y","frame":null},{"fillcolor":"rgba(253,231,37,0.5)","x":["WESTCHESTER"],"y":[70692.0269087523],"type":"box","name":"WESTCHESTER","marker":{"color":"rgba(253,231,37,1)","line":{"color":"rgba(253,231,37,1)"}},"line":{"color":"rgba(253,231,37,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div id="base-salary" class="section level5 tabset">
+<h5 class="tabset">Base Salary</h5>
+<div id="base-salary-by-annually" class="section level6">
+<h6>Base Salary by Annually</h6>
+<pre class="r"><code>pay_basis_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Annually&quot;) |&gt; 
+    group_by(county_name) %&gt;% 
+    summarise(median_base_salary = median(base_salary))
+
+Median_base_salary_plot_annually =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Annually&quot;) |&gt; 
+    left_join(pay_basis_tibble, by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary), y = base_salary, 
+               fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(20000, 150000),
+    breaks = seq(20000, 150000, by = 10000)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary&quot;,
+    title = &quot;Annual Median Base Salary For Each County&quot;, 
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_annually</code></pre>
+<p><img src="base_salary_files/figure-html/unnamed-chunk-4-1.png" width="90%" /></p>
+</div>
+<div id="base-salary-by-daily" class="section level6">
+<h6>Base Salary by Daily</h6>
+<pre class="r"><code>pay_basis_daily_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Daily&quot;) |&gt; 
+    group_by(county_name) |&gt; 
+    summarise(median_base_salary_daily = median(base_salary))
+
+Median_base_salary_plot_daily =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Daily&quot;) |&gt; 
+    left_join(pay_basis_daily_tibble,  by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary_daily) , 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,625),
+    breaks = seq(0, 625, by = 50)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary&quot;,
+    title = &quot;Daily Median Base Salary For Each County&quot;, 
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_daily</code></pre>
+<p><img src="base_salary_files/figure-html/unnamed-chunk-5-1.png" width="90%" /></p>
+</div>
+<div id="base-salary-by-hourly" class="section level6">
+<h6>Base Salary by Hourly</h6>
+<pre class="r"><code>pay_basis_hourly_tibble= 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
+    group_by(county_name) %&gt;%
+    summarise(median_base_salary_hourly = median(base_salary))
+
+Median_base_salary_plot_hourly =
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Hourly&quot;) |&gt; 
+    left_join(pay_basis_hourly_tibble,  by = &quot;county_name&quot;) %&gt;%
+    ggplot(aes(x = reorder(county_name, median_base_salary_hourly), 
+               y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(0,95),
+    breaks = seq(0,95, by = 10)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary&quot;,
+    title = &quot;Hourly Median Base Salary For Each County&quot;,
+     fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) 
+
+Median_base_salary_plot_hourly</code></pre>
+<p><img src="base_salary_files/figure-html/unnamed-chunk-6-1.png" width="90%" /></p>
+</div>
+<div id="base-salary-by-prorated" class="section level6">
+<h6>Base Salary by Prorated</h6>
+<pre class="r"><code>pay_basis_prorated_tibble = 
+    payroll_data %&gt;%
+    filter(pay_basis == &quot;Prorated Annual&quot;) |&gt; 
+    group_by(county_name) %&gt;%
+    summarise(median_base_salary_prorated = median(base_salary))  
+    
+Median_base_salary_plot_prorated =
+    payroll_data %&gt;%
+    left_join(pay_basis_prorated_tibble,  by = &quot;county_name&quot;) %&gt;%   
+    ggplot(aes(x = reorder(county_name, median_base_salary_prorated), y = base_salary, fill = county_name)) +
+    geom_boxplot() +
+    scale_y_continuous(
+      labels = scales::comma,
+    limits = c(5000,85000),
+    breaks = seq(5000, 85000, by = 10000)) +
+    labs(
+    x = &quot;County Names&quot;,
+    y = &quot; Base Salary&quot;,
+    title = &quot;Prorated Annual Median Base Salary For Each County&quot;,
+    fill = &quot;New York State County Names&quot;
+  ) + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+
+Median_base_salary_plot_prorated</code></pre>
+<p><img src="base_salary_files/figure-html/unnamed-chunk-7-1.png" width="90%" /></p>
+</div>
+</div>
+</div>
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
